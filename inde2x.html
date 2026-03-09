@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تجربة مميزة ✨</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --accent-red: #ff4757;
+    --accent-light: #e0e6ed;
+    --card-bg: rgba(15, 22, 45, 0.88);
+    --glow: rgba(255, 71, 87, 0.35);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #000;
+    color: var(--accent-light);
+    font-family: 'Tajawal', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 16px;
+}
+
+/* ===== STAR CANVAS ===== */
+#starCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(ellipse at 50% 40%, #0d1b2a 0%, #000008 70%);
+}
+
+/* ===== HEARTS ===== */
+.falling-heart {
+    position: fixed;
+    top: -5%;
+    color: var(--accent-red);
+    animation: fall linear forwards;
+    z-index: 1;
+    opacity: 0.7;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* ===== CARD ===== */
+.card-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 480px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow:
+        0 24px 60px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.07),
+        0 0 40px var(--glow);
+    padding: clamp(1.2rem, 5vw, 2.2rem);
+    text-align: center;
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    transform-style: preserve-3d;
+    transition: transform 0.12s ease, box-shadow 0.3s ease;
+    animation: cardIn 0.7s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===== TYPOGRAPHY ===== */
+h2 {
+    font-family: 'Pacifico', cursive;
+    color: var(--accent-red);
+    text-shadow: 0 0 18px rgba(255,71,87,0.5);
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    margin-bottom: 0.5rem;
+}
+
+p.subtitle {
+    font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+    color: rgba(224,230,237,0.8);
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+}
+
+/* ===== BUTTONS ===== */
+.btn-game {
+    display: block;
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.18);
+    color: var(--accent-light);
+    padding: clamp(10px, 3vw, 14px) 20px;
+    border-radius: 50px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
+}
+
+.btn-game:hover, .btn-game:focus {
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: #fff;
+    transform: scale(1.03) translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255,71,87,0.45);
+    outline: none;
+}
+
+.btn-game:active {
+    transform: scale(0.98);
+}
+
+/* ===== FEEDBACK ===== */
+.feedback-msg {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    margin-top: 14px;
+    min-height: 28px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+/* ===== HEART LOADER ===== */
+.heart-loader-container {
+    position: relative;
+    width: clamp(110px, 35vw, 150px);
+    height: clamp(110px, 35vw, 150px);
+    margin: 0 auto 1.2rem;
+}
+
+.heart-svg {
+    width: 100%; height: 100%;
+    fill: none;
+    stroke: var(--accent-red);
+    stroke-width: 4;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dashoffset 0.1s linear;
+    filter: drop-shadow(0 0 8px rgba(255,71,87,0.6));
+}
+
+.heart-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent-red);
+    clip-path: path("M75 130 C 75 130, 10 80, 10 45 C 10 20, 25 5, 45 5 C 60 5, 75 15, 75 15 C 75 15, 90 5, 105 5 C 125 5, 140 20, 140 45 C 140 80, 75 130, 75 130 Z");
+    transform-origin: 50% 50%;
+    transform: scale(0);
+    transition: transform 0.1s linear;
+    filter: drop-shadow(0 0 12px rgba(255,71,87,0.7));
+}
+
+/* ===== TYPEWRITER ===== */
+.typewriter-text {
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+    line-height: 1.7;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-light);
+    padding: 0 4px;
+}
+
+/* ===== UTILITIES ===== */
+.hidden { display: none !important; }
+
+.fade-in {
+    animation: fadeIn 0.6s ease both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== STAGE DIVIDER ===== */
+.stage-label {
+    display: inline-block;
+    background: rgba(255,71,87,0.12);
+    border: 1px solid rgba(255,71,87,0.3);
+    color: var(--accent-red);
+    border-radius: 50px;
+    padding: 4px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 400px) {
+    .card-container { border-radius: 18px; }
+}
+
+@media (min-width: 768px) {
+    .card-container {
+        perspective: 1000px;
+    }
+}
+</style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+
+<!-- START SCREEN -->
+<div id="startScreen" style="
+    position:fixed; inset:0; z-index:999;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    background:rgba(0,0,0,0.6);
+    -webkit-backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);
+    padding:20px;
+">
+    <p style="font-family:'Tajawal',sans-serif; font-size:clamp(1rem,4vw,1.3rem); color:rgba(224,230,237,0.85); margin-bottom:28px; text-align:center; max-width:320px; line-height:1.6;">
+        🎶 استعدي لتجربة مميزة
+    </p>
+    <button onclick="startApp()" style="
+        background: var(--accent-red);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 16px 48px;
+        font-family: 'Tajawal', sans-serif;
+        font-size: clamp(1rem,4vw,1.2rem);
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 0 30px rgba(255,71,87,0.6);
+        transition: transform 0.2s, box-shadow 0.2s;
+        letter-spacing: 0.5px;
+    " onmouseover="this.style.transform='scale(1.07)'" onmouseout="this.style.transform='scale(1)'">
+        ✨ ابدأي اللعبة
+    </button>
+</div>
+
+<div class="card-container hidden" id="tiltCard">
+
+    <!-- Stage 1 -->
+    <div id="stage1" class="fade-in">
+        <div class="stage-label">المرحلة ١</div>
+        <h2>اختيارك</h2>
+        <p class="subtitle">عايزة تدخلي كلية إيه؟</p>
+        <div>
+            <button class="btn-game" onclick="handleStage1('CS')">💻 حاسبات ومعلومات</button>
+            <button class="btn-game" onclick="handleStage1('Info')">🌿 زراعة</button>
+            <button class="btn-game" onclick="handleStage1('Nursing')">🩺 طب</button>
+            <button class="btn-game" onclick="handleStage1('Eng')">⚙️ هندسة</button>
+            <button class="btn-game" onclick="handleStage1('Sci')">🔬 علوم</button>
+        </div>
+        <div id="feedback1" class="feedback-msg"></div>
+    </div>
+
+    <!-- Stage 2 -->
+    <div id="stage2" class="hidden fade-in">
+        <div class="stage-label">المرحلة ٢</div>
+        <h2>سؤال مهم</h2>
+        <p class="subtitle">مين أوسم شاب في مصر؟</p>
+        <div>
+            <button class="btn-game" onclick="handleStage2('Ahmed Malik')">أحمد مالك</button>
+            <button class="btn-game" onclick="handleStage2('Essam')">عصام عمر</button>
+            <button class="btn-game" onclick="handleStage2('Ahmed Ezz')">أحمد عز</button>
+            <button class="btn-game" onclick="handleStage2('Motazz Alaa')">معتز علاء</button>
+            <button class="btn-game" onclick="handleStage2('Mostafa Tata')">مصطفى طاطا</button>
+        </div>
+        <div id="feedback2" class="feedback-msg"></div>
+    </div>
+
+    <!-- Stage 3 -->
+    <div id="stage3" class="hidden fade-in">
+        <div class="heart-loader-container">
+            <svg class="heart-svg" viewBox="0 0 150 130">
+                <path d="M75 130 C 75 130, 10 80, 10 45 C 10 20, 25 5, 45 5 C 60 5, 75 15, 75 15 C 75 15, 90 5, 105 5 C 125 5, 140 20, 140 45 C 140 80, 75 130, 75 130 Z" />
+            </svg>
+            <div class="heart-fill" id="heartFill"></div>
+        </div>
+        <div id="loaderText" class="typewriter-text"></div>
+        <div id="ytContainer" class="hidden" style="margin-top:1.2rem; border-radius:14px; overflow:hidden; box-shadow:0 0 24px rgba(255,71,87,0.4);">
+        </div>
+    </div>
+
+</div>
+
+<script>
+/* ===== STAR CANVAS ===== */
+(function () {
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, stars = [], shootingStars = [];
+
+    function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 300; i++) {
+        stars.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            r: Math.random() * 1.7 + 0.2,
+            alpha: Math.random(),
+            delta: (Math.random() - 0.5) * 0.018,
+            hue: Math.random() > 0.82 ? Math.floor(Math.random() * 80 + 190) : 0
+        });
+    }
+
+    function spawnShooting() {
+        shootingStars.push({
+            x: Math.random() * W * 0.7,
+            y: Math.random() * H * 0.4,
+            len: Math.random() * 130 + 60,
+            speed: Math.random() * 7 + 4,
+            alpha: 1,
+            angle: Math.PI / 4 + (Math.random() - 0.5) * 0.35
+        });
+    }
+    setInterval(spawnShooting, 3000);
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        for (const s of stars) {
+            s.alpha += s.delta;
+            if (s.alpha <= 0) { s.alpha = 0; s.delta *= -1; }
+            if (s.alpha >= 1) { s.alpha = 1; s.delta *= -1; }
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = s.hue
+                ? `hsla(${s.hue},75%,80%,${s.alpha})`
+                : `rgba(255,255,255,${s.alpha})`;
+            ctx.fill();
+            if (s.r > 1.3) {
+                ctx.strokeStyle = `rgba(255,255,255,${s.alpha * 0.35})`;
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(s.x - s.r * 3.5, s.y); ctx.lineTo(s.x + s.r * 3.5, s.y); ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(s.x, s.y - s.r * 3.5); ctx.lineTo(s.x, s.y + s.r * 3.5); ctx.stroke();
+            }
+        }
+
+        for (let i = shootingStars.length - 1; i >= 0; i--) {
+            const ss = shootingStars[i];
+            const ex = ss.x + Math.cos(ss.angle) * ss.len;
+            const ey = ss.y + Math.sin(ss.angle) * ss.len;
+            const g = ctx.createLinearGradient(ss.x, ss.y, ex, ey);
+            g.addColorStop(0, 'rgba(255,255,255,0)');
+            g.addColorStop(0.6, `rgba(210,225,255,${ss.alpha * 0.6})`);
+            g.addColorStop(1, `rgba(255,255,255,${ss.alpha})`);
+            ctx.beginPath();
+            ctx.strokeStyle = g;
+            ctx.lineWidth = 1.8;
+            ctx.moveTo(ss.x, ss.y); ctx.lineTo(ex, ey); ctx.stroke();
+            ss.x += Math.cos(ss.angle) * ss.speed;
+            ss.y += Math.sin(ss.angle) * ss.speed;
+            ss.alpha -= 0.016;
+            if (ss.alpha <= 0) shootingStars.splice(i, 1);
+        }
+
+        requestAnimationFrame(draw);
+    }
+    draw();
+})();
+
+/* ===== START ===== */
+function startApp() {
+    const ss = document.getElementById('startScreen');
+    ss.style.opacity = '0';
+    ss.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => {
+        ss.style.display = 'none';
+        const tc = document.getElementById('tiltCard');
+        tc.classList.remove('hidden');
+        tc.classList.add('fade-in');
+    }, 500);
+}
+
+/* ===== SHAKE CARD ===== */
+function shakeCard() {
+    const card = document.getElementById('tiltCard');
+    card.style.transition = 'transform 0.08s ease';
+    const seq = [8, -8, 6, -6, 3, 0];
+    seq.forEach((v, i) => {
+        setTimeout(() => {
+            card.style.transform = `translateX(${v}px)`;
+            if (i === seq.length - 1) card.style.transition = 'transform 0.12s ease';
+        }, i * 80);
+    });
+}
+
+/* ===== STAGE 1 ===== */
+function handleStage1(choice) {
+    const feedback = document.getElementById('feedback1');
+    if (choice === 'Nursing') {
+        feedback.innerHTML = "<span style='color:#4cd137'>✅ تمام! هنتقل للمرحلة التالية...</span>";
+        setTimeout(() => {
+            document.getElementById('stage1').classList.add('hidden');
+            document.getElementById('stage2').classList.remove('hidden');
+        }, 900);
+    } else {
+        feedback.innerHTML = "<span style='color:#ff6b81'>انتي تستاهلي مكان أحسن! ❤️</span>";
+        shakeCard();
+    }
+}
+
+/* ===== STAGE 2 ===== */
+function handleStage2(choice) {
+    const feedback = document.getElementById('feedback2');
+    if (choice === 'Mostafa Tata') {
+        feedback.innerHTML = "<span style='color:#4cd137'>✅ صح! المرحلة النهائية جاري التحميل...</span>";
+        setTimeout(() => {
+            document.getElementById('stage2').classList.add('hidden');
+            document.getElementById('stage3').classList.remove('hidden');
+            startHeartAnimation();
+        }, 900);
+    } else {
+        feedback.innerHTML = "<span style='color:#ff6b81'>لأ يا شيخه 😜</span>";
+        shakeCard();
+    }
+}
+
+/* ===== HEART ANIMATION ===== */
+function startHeartAnimation() {
+    const heartFill = document.getElementById('heartFill');
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress++;
+        heartFill.style.transform = `scale(${progress / 100})`;
+        if (progress >= 100) {
+            clearInterval(interval);
+            document.getElementById('ytContainer').classList.remove('hidden');
+            startTypewriter();
+        }
+    }, 28);
+}
+
+/* ===== TYPEWRITER ===== */
+const messages = [
+    "أشطر مريومة وأصغر دكتورة أعرفها... 🌟",
+    "انتي قادرة على أي حاجة تحلمي بيها ✨",
+    "حتي لو محدش ملاحظ تعبك، أنا فخور بيكي جداً 💖",
+    "انتي مش بس دكتورة، انتي ملاك في حياة كل اللي حواليكي 👼",
+    "you are special 🦋",
+    "الشخص الوحيد اللي ماندمتش علي معرفته 🤍",
+    "أفضل شخص عرفته في حياتي ❤️"
+];
+
+let msgIndex = 0, charIndex = 0, isDeleting = false;
+
+function startTypewriter() {
+    const el = document.getElementById('loaderText');
+    const msg = messages[msgIndex];
+    el.textContent = isDeleting
+        ? msg.substring(0, charIndex - 1)
+        : msg.substring(0, charIndex + 1);
+    isDeleting ? charIndex-- : charIndex++;
+    let speed = isDeleting ? 45 : 90;
+    if (!isDeleting && charIndex === msg.length) { speed = 2200; isDeleting = true; }
+    else if (isDeleting && charIndex === 0) { isDeleting = false; msgIndex = (msgIndex + 1) % messages.length; speed = 400; }
+    setTimeout(startTypewriter, speed);
+}
+
+/* ===== FALLING HEARTS ===== */
+function createHeart() {
+    const h = document.createElement('div');
+    h.className = 'falling-heart';
+    h.textContent = '❤️';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (Math.random() * 16 + 10) + 'px';
+    h.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+}
+setInterval(createHeart, 350);
+
+/* Click burst */
+document.addEventListener('click', (e) => {
+    for (let i = 0; i < 4; i++) {
+        setTimeout(() => {
+            const h = document.createElement('div');
+            h.className = 'falling-heart';
+            h.textContent = '❤️';
+            h.style.left = e.clientX + 'px';
+            h.style.top = e.clientY + 'px';
+            h.style.position = 'fixed';
+            h.style.animationDuration = (Math.random() * 1.5 + 0.8) + 's';
+            h.style.fontSize = (Math.random() * 14 + 10) + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 2500);
+        }, i * 80);
+    }
+});
+
+/* ===== 3D TILT (desktop only) ===== */
+const card = document.getElementById('tiltCard');
+
+document.addEventListener('mousemove', (e) => {
+    if (window.innerWidth < 768) return;
+    const xAxis = (window.innerWidth / 2 - e.clientX) / 28;
+    const yAxis = (window.innerHeight / 2 - e.clientY) / 28;
+    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+});
+
+document.addEventListener('mouseleave', () => {
+    if (window.innerWidth < 768) return;
+    card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+});
+
+card.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    const xAxis = (window.innerWidth / 2 - t.clientX) / 28;
+    const yAxis = (window.innerHeight / 2 - t.clientY) / 28;
+    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+}, { passive: true });
+
+card.addEventListener('touchend', () => {
+    card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+});
+</script>
+
+</body>
+</html>
